@@ -6,7 +6,7 @@ interface TaskProps {}
 
 export const Tasks: React.FC<TaskProps> = () => {
   return (
-    <Layout title="All tasks">
+    <Layout>
       <Text>tasks screen</Text>
     </Layout>
   );

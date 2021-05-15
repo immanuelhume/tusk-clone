@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { Switch, Text, View } from "react-native";
 import styled from "styled-components/native";
+import { useAppDispatch } from "../redux/hooks";
 import { theme } from "../themes";
 
 interface SwitchSectionProps {
   label: string;
   defaultValue?: boolean;
+  onTrue?: () => void;
+  onFalse?: () => void;
 }
 
 // children refers to the Switch component
 export const SwitchSection: React.FC<SwitchSectionProps> = ({
   label,
   defaultValue = false,
+  onTrue,
+  onFalse,
   children,
 }) => {
   const [isEnabled, setIsEnabled] = useState(defaultValue);
+  const dispatch = useAppDispatch();
 
   return (
     <View>
@@ -29,7 +35,19 @@ export const SwitchSection: React.FC<SwitchSectionProps> = ({
           }}
           thumbColor={isEnabled ? theme.colors.secondary : theme.colors.gray}
           value={isEnabled}
-          onValueChange={() => setIsEnabled(!isEnabled)}
+          onValueChange={() => {
+            if (isEnabled) {
+              if (onFalse) {
+                onFalse();
+              }
+              setIsEnabled(false);
+            } else {
+              if (onTrue) {
+                onTrue();
+              }
+              setIsEnabled(true);
+            }
+          }}
         />
       </SwitchSectionContainer>
       {isEnabled && children}

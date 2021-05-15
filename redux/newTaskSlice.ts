@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Task } from "../types/Task";
+import { Task } from "./tasksSlice";
 
-interface newTaskInfo extends Partial<Task> {}
+export interface newTaskInfo extends Partial<Task> {}
 const initialState: newTaskInfo = {
   date: new Date().valueOf(),
+  icon: "dolphin",
 };
 
 const newTaskSlice = createSlice({

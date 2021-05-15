@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
     React.useCallback(() => {
       setTimeout(() => {
         taskNameInput.current?.focus(); // setTimeout turns out to be necessary here
-      }, 250);
+      }, 100);
     }, [taskNameInput.current])
   );
 

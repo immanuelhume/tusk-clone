@@ -1,15 +1,23 @@
-import backpack from "./001-backpack.png";
-import pencilCase from "./002-pencil case.png";
-import alarmClock from "./003-alarm clock.png";
-import highlighter from "./004-highlighter.png";
-import desk from "./005-desk.png";
-import whistle from "./006-whistle.png";
+import giraffe from "./001-giraffe.png";
+import seal from "./002-seal.png";
+import crane from "./003-crane.png";
+import bat from "./004-bat.png";
+import rabbit from "./005-rabbit.png";
+import dolphin from "./006-dolphin.png";
+import butterfly from "./007-butterfly.png";
+import hat from "./008-hat.png";
+import tulip from "./009-tulip.png";
+import pig from "./010-pig.png";
 
 export const Icons = {
-  backpack,
-  pencilCase,
-  alarmClock,
-  highlighter,
-  desk,
-  whistle,
+  giraffe,
+  seal,
+  crane,
+  bat,
+  rabbit,
+  dolphin,
+  butterfly,
+  hat,
+  tulip,
+  pig,
 };

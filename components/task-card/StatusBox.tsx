@@ -1,8 +1,8 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { Text, View } from "react-native";
+import { TaskStatus } from "../../redux/tasksSlice";
 import { theme } from "../../themes";
-import { TaskStatus } from "../../types/Task";
 
 interface TaskStatusProps extends TaskStatus {}
 

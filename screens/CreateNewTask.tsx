@@ -7,26 +7,30 @@ import {
   ScrollView,
   Text,
   TouchableNativeFeedback,
-  TouchableOpacity,
   View,
 } from "react-native";
-import { CalendarList } from "react-native-calendars";
 import styled from "styled-components/native";
 import { RootTabParamList } from "../App";
 import { Icons } from "../assets";
 import { DoublePillButton } from "../components/buttons/DoublePillButton";
-import { GenericButton } from "../components/buttons/GenericButton";
 import { IconButton } from "../components/buttons/IconButton";
+import { Calendar } from "../components/Calendar";
 import { Header } from "../components/Header";
+import {
+  IconChoice,
+  IconChoiceContainer,
+  IconSelection,
+} from "../components/IconSelection";
 import { Layout } from "../components/Layout";
 import { SwitchSection } from "../components/SwitchSection";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { updateNewTask } from "../redux/newTaskSlice";
+import { saveTask } from "../redux/tasksSlice";
 import { theme } from "../themes";
 
 interface CreateNewTaskProps {}
 
-const { width: screenWidth, height } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 type CreateNewTaskScreenNavigationProps = BottomTabNavigationProp<
   RootTabParamList,
@@ -40,6 +44,8 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
   const newTaskValues = useAppSelector((state) => state.newTask);
 
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
+  const [iconSelectionModalOpen, setIconSelectionModalOpen] = useState(false);
+
   return (
     <Layout>
       <Header
@@ -49,17 +55,29 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
           dispatch(updateNewTask({ field: "name", value: text }));
         }}
       >
-        <IconButton iconName="save-outline" />
+        <IconButton
+          iconName="save-outline"
+          onPress={() => dispatch(saveTask(newTaskValues))}
+        />
       </Header>
 
       <ScrollView>
         <View style={{ alignItems: "center", marginTop: theme.spacing.lg }}>
-          <IconChoiceContainer>
-            <TouchableOpacity>
-              <IconChoice source={Icons.backpack} />
-            </TouchableOpacity>
+          <IconChoiceContainer onPress={() => setIconSelectionModalOpen(true)}>
+            <IconChoice
+              source={Icons[newTaskValues.icon as keyof typeof Icons]}
+            />
           </IconChoiceContainer>
         </View>
+
+        <Modal
+          visible={iconSelectionModalOpen}
+          onRequestClose={() => setIconSelectionModalOpen(false)}
+          animationType="fade"
+          transparent={true}
+        >
+          <IconSelection closeSelf={() => setIconSelectionModalOpen(false)} />
+        </Modal>
 
         <DescriptionInput
           placeholder="Description"
@@ -75,7 +93,18 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
           rightHandIcon="aperture-outline"
         />
 
-        <SwitchSection label="Date" defaultValue={true}>
+        <SwitchSection
+          label="Date"
+          defaultValue={true}
+          onTrue={() =>
+            dispatch(
+              updateNewTask({ field: "date", value: new Date().valueOf() })
+            )
+          }
+          onFalse={() =>
+            dispatch(updateNewTask({ field: "date", value: undefined }))
+          }
+        >
           <TouchableNativeFeedback onPress={() => setCalendarModalOpen(true)}>
             <PillContainer style={{ elevation: 2 }}>
               <Text>
@@ -91,58 +120,7 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
           onRequestClose={() => setCalendarModalOpen(false)}
           animationType="fade"
         >
-          <View
-            style={{
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              flex: 1,
-              justifyContent: "center",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <View
-              style={{
-                borderRadius: theme.spacing.md,
-                backgroundColor: theme.colors.white,
-                paddingVertical: theme.spacing.md,
-                marginVertical: "auto",
-              }}
-            >
-              <CalendarList
-                horizontal={true}
-                pagingEnabled={true}
-                calendarWidth={screenWidth * 0.8}
-                style={{
-                  width: screenWidth * 0.8,
-                  backgroundColor: undefined,
-                }}
-                theme={{
-                  todayTextColor: theme.colors.primary,
-                  "stylesheet.calendar.main": {
-                    container: {
-                      backgroundColor: undefined,
-                    },
-                    monthView: {
-                      backgroundColor: undefined,
-                    },
-                  },
-                }}
-              />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  marginTop: theme.spacing.md,
-                }}
-              >
-                <GenericButton
-                  text="Cancel"
-                  onPress={() => setCalendarModalOpen(false)}
-                />
-                <GenericButton text="OK" bgColor={theme.colors.highlight} />
-              </View>
-            </View>
-          </View>
+          <Calendar closeCalendar={() => setCalendarModalOpen(false)} />
         </Modal>
 
         <SwitchSection label="Time" />
@@ -151,17 +129,6 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
     </Layout>
   );
 };
-
-const IconChoiceContainer = styled.View`
-  padding: ${theme.spacing.md}px;
-  background-color: ${theme.colors.gray};
-  border-radius: 100px;
-`;
-
-const IconChoice = styled.Image`
-  height: 100px;
-  width: 100px;
-`;
 
 const DescriptionInput = styled.TextInput`
   border-bottom-width: 1px;

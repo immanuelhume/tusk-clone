@@ -8,7 +8,7 @@ import { Header } from "../components/Header";
 import { Layout } from "../components/Layout";
 import { TaskCard } from "../components/task-card/TaskCard";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { Task } from "../types/Task";
+import { Task } from "../redux/tasksSlice";
 
 type HomeScreenNavigationProps = BottomTabNavigationProp<
   RootTabParamList,

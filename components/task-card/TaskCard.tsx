@@ -4,9 +4,8 @@ import Swipable from "react-native-gesture-handler/Swipeable";
 import styled from "styled-components/native";
 import { Icons } from "../../assets/index";
 import { useAppDispatch } from "../../redux/hooks";
-import { completeTask } from "../../redux/tasksSlice";
+import { completeTask, Task } from "../../redux/tasksSlice";
 import { theme } from "../../themes";
-import { Task } from "../../types/Task";
 import { StatusBox } from "./StatusBox";
 import { SwipeActionBoxContainer } from "./SwipeActionBoxContainerProps";
 
