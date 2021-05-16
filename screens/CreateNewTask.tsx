@@ -15,6 +15,7 @@ import { Icons } from "../assets";
 import { DoublePillButton } from "../components/buttons/DoublePillButton";
 import { IconButton } from "../components/buttons/IconButton";
 import { Calendar } from "../components/Calendar";
+import { DateSelection } from "../components/DateSelection";
 import { Header } from "../components/Header";
 import {
   IconChoice,
@@ -135,7 +136,36 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
           <Calendar closeCalendar={() => setCalendarModalOpen(false)} />
         </Modal>
 
-        <SwitchSection label="Time" />
+        <SwitchSection
+          label="Time"
+          onFalse={() =>
+            dispatch(updateNewTask({ field: "time", value: undefined }))
+          }
+        >
+          <View>
+            <DateSelection
+              iconName="sunny-outline"
+              text="Morning"
+              onPress={() =>
+                dispatch(updateNewTask({ field: "time", value: "morning" }))
+              }
+            />
+            <DateSelection
+              iconName="sunny-sharp"
+              text="Noon"
+              onPress={() =>
+                dispatch(updateNewTask({ field: "time", value: "noon" }))
+              }
+            />
+            <DateSelection
+              iconName="moon-outline"
+              text="Evening"
+              onPress={() =>
+                dispatch(updateNewTask({ field: "time", value: "evening" }))
+              }
+            />
+          </View>
+        </SwitchSection>
         <SwitchSection label="Notifications" />
       </ScrollView>
     </Layout>

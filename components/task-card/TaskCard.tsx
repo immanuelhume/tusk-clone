@@ -72,7 +72,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           <StatusBox status={status} />
         </View>
         {time && (
-          <Text style={{ marginBottom: "auto" }}>
+          <Text style={{ marginBottom: "auto", textTransform: "capitalize" }}>
             {typeof time === "number"
               ? new Date(time).toLocaleDateString()
               : time}
