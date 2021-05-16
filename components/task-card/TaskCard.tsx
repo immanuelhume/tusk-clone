@@ -68,7 +68,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           }}
         />
         <View style={{ flex: 1 }}>
-          <Text>{name}</Text>
+          <Text style={{ marginBottom: theme.spacing.sm }}>{name}</Text>
           <StatusBox status={status} />
         </View>
         {time && (
@@ -87,6 +87,7 @@ const TaskContainer = styled.View`
   background-color: ${theme.colors.gray};
   padding: ${theme.spacing.sm}px;
   flex-direction: row;
+  align-items: center;
   border-bottom-width: 1px;
   border-color: ${theme.colors.primary};
 `;

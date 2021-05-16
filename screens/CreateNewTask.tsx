@@ -24,7 +24,7 @@ import {
 import { Layout } from "../components/Layout";
 import { SwitchSection } from "../components/SwitchSection";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { updateNewTask } from "../redux/newTaskSlice";
+import { resetNewTask, updateNewTask } from "../redux/newTaskSlice";
 import { saveTask } from "../redux/tasksSlice";
 import { theme } from "../themes";
 
@@ -51,18 +51,29 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
       <Header
         backButton={navigation.goBack}
         textInputPlaceholder="Task name"
+        textInputValue={newTaskValues.name}
         onChangeText={(text) => {
           dispatch(updateNewTask({ field: "name", value: text }));
         }}
       >
         <IconButton
           iconName="save-outline"
-          onPress={() => dispatch(saveTask(newTaskValues))}
+          onPress={() => {
+            dispatch(saveTask(newTaskValues));
+            dispatch(resetNewTask());
+            navigation.navigate("Today");
+          }}
         />
       </Header>
 
       <ScrollView>
-        <View style={{ alignItems: "center", marginTop: theme.spacing.lg }}>
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: theme.spacing.lg,
+            marginBottom: theme.spacing.md,
+          }}
+        >
           <IconChoiceContainer onPress={() => setIconSelectionModalOpen(true)}>
             <IconChoice
               source={Icons[newTaskValues.icon as keyof typeof Icons]}
@@ -81,6 +92,7 @@ export const CreateNewTask: React.FC<CreateNewTaskProps> = ({}) => {
 
         <DescriptionInput
           placeholder="Description"
+          value={newTaskValues.desc}
           onChangeText={(text) => {
             dispatch(updateNewTask({ field: "desc", value: text }));
           }}

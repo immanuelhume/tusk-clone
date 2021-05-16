@@ -10,6 +10,7 @@ interface HeaderProps {
   title?: string;
   backButton?: () => void;
   textInputPlaceholder?: string;
+  textInputValue?: string;
   onChangeText?: (text: string) => void;
 }
 
@@ -19,6 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   backButton,
   children,
   textInputPlaceholder,
+  textInputValue,
   onChangeText,
 }) => {
   const taskNameInput = useRef<TextInput>(null);
@@ -48,6 +50,7 @@ export const Header: React.FC<HeaderProps> = ({
       {title && <HeaderText>{title}</HeaderText>}
       {textInputPlaceholder && (
         <TextInput
+          value={textInputValue}
           placeholder={textInputPlaceholder}
           placeholderTextColor={theme.colors.white}
           selectionColor={theme.colors.white}

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Task } from "./tasksSlice";
 
 export interface newTaskInfo extends Partial<Task> {}
@@ -21,8 +21,11 @@ const newTaskSlice = createSlice({
       state[action.payload.field] = action.payload.value;
       console.log(state);
     },
+    resetNewTask(_state, _action: PayloadAction<undefined, string>) {
+      return initialState;
+    },
   },
 });
 
-export const { updateNewTask } = newTaskSlice.actions;
+export const { updateNewTask, resetNewTask } = newTaskSlice.actions;
 export const newTaskReducer = newTaskSlice.reducer;

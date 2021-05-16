@@ -32,9 +32,10 @@ export const SelectNewTask: React.FC<SelectNewTaskProps> = ({}) => {
       <DefaultTaskCreationCard
         iconName="aperture-outline"
         desc="Regular"
-        onPress={() =>
-          dispatch(updateNewTask({ field: "regular", value: false }))
-        }
+        onPress={() => {
+          navigation.navigate("Create New Task");
+          dispatch(updateNewTask({ field: "regular", value: true }));
+        }}
       />
     </Layout>
   );

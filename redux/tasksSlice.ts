@@ -16,32 +16,7 @@ export interface TaskStatus {
   status: "pending" | "complete";
 }
 
-const initialState: Task[] = [
-  {
-    id: 0,
-    name: "Buy tuna",
-    status: "pending",
-    time: new Date(2021, 5, 8).valueOf(),
-    icon: "giraffe",
-    regular: false,
-  },
-  {
-    id: 1,
-    name: "Run a marathon",
-    status: "pending",
-    time: "Noon",
-    icon: "dolphin",
-    regular: true,
-  },
-  {
-    id: 3,
-    name: "Walk the dog",
-    status: "pending",
-    time: new Date(2021, 5, 8).valueOf(),
-    icon: "pig",
-    regular: false,
-  },
-];
+const initialState: Task[] = [];
 
 const tasksSlice = createSlice({
   name: "tasks",
@@ -54,7 +29,6 @@ const tasksSlice = createSlice({
         status: "pending",
         ...action.payload,
       } as Task;
-      console.log(newTask);
       state.unshift(newTask);
     },
     completeTask: (state, action) =>
